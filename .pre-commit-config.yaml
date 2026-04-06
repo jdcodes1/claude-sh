@@ -1,0 +1,42 @@
+fail_fast: true
+
+repos:
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.48.0
+    hooks:
+      - id: markdownlint
+        args: [--fix, --config, .markdownlint.jsonc]
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        args: ['--maxkb=1024']
+      - id: check-executables-have-shebangs
+        files: \.(py|sh)$
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+        files: \.(py|sh)$
+      - id: check-symlinks
+      - id: debug-statements
+      - id: destroyed-symlinks
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        files: \.(py|sh)$
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+        files: \.(py|sh)$
+      - id: check-toml
+        files: \.toml$
+      - id: check-yaml
+        args: [--unsafe]
+        files: \.(yaml|yml)$
+      - id: pretty-format-json
+        # https://pre-commit.com/#regular-expressions
+        args: ['--autofix', '--indent=2', '--no-sort-keys']
+        files: \.(json|jsonc)$
+        exclude: |
+            (?x)^(
+                .vscode/launch.json|
+                .vscode/settings.json|
+                .vscode/extensions.json|
+            )$
