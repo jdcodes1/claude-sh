@@ -47,11 +47,16 @@ teardown() {
 	[ ! -d "$dir" ]
 }
 
-@test "cleanup_session: exits nonzero when SESSION_DIR does not exist" {
-	# [[ -d ... ]] && rm short-circuits to false when dir is missing
+@test "cleanup_session: succeeds when SESSION_DIR does not exist" {
 	SESSION_DIR="/nonexistent/path/$$"
 	run cleanup_session
-	[ "$status" -ne 0 ]
+	[ "$status" -eq 0 ]
+}
+
+@test "cleanup_session: succeeds when SESSION_DIR is empty string" {
+	SESSION_DIR=""
+	run cleanup_session
+	[ "$status" -eq 0 ]
 }
 
 # ── add_user_message ─────────────────────────────────────────

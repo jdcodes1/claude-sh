@@ -29,7 +29,9 @@ init_session() {
 }
 
 cleanup_session() {
-    [[ -d "$SESSION_DIR" ]] && rm -rf "$SESSION_DIR"
+    if [[ -n "$SESSION_DIR" ]] && [[ -d "$SESSION_DIR" ]]; then
+        rm -rf "$SESSION_DIR"
+    fi
 }
 
 # Add a user message

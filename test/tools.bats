@@ -27,10 +27,38 @@ teardown() {
 	[ "$status" -eq 0 ]
 }
 
-@test "is_safe_command: git is extracted as base command" {
-	# is_safe_command uses awk to extract first word, so "git log" becomes "git"
-	# which does not match the "git\ log" case pattern — this is a known limitation
+@test "is_safe_command: git log is safe" {
 	run is_safe_command "git log --oneline"
+	[ "$status" -eq 0 ]
+}
+
+@test "is_safe_command: git status is safe" {
+	run is_safe_command "git status"
+	[ "$status" -eq 0 ]
+}
+
+@test "is_safe_command: git diff is safe" {
+	run is_safe_command "git diff HEAD"
+	[ "$status" -eq 0 ]
+}
+
+@test "is_safe_command: git show is safe" {
+	run is_safe_command "git show HEAD"
+	[ "$status" -eq 0 ]
+}
+
+@test "is_safe_command: git branch is safe" {
+	run is_safe_command "git branch -a"
+	[ "$status" -eq 0 ]
+}
+
+@test "is_safe_command: git push is not safe" {
+	run is_safe_command "git push origin main"
+	[ "$status" -ne 0 ]
+}
+
+@test "is_safe_command: git reset is not safe" {
+	run is_safe_command "git reset --hard"
 	[ "$status" -ne 0 ]
 }
 
@@ -68,11 +96,16 @@ teardown() {
 	[ "$status" -ne 0 ]
 }
 
-@test "ask_permission: deny mode blocks even safe commands" {
+@test "ask_permission: deny mode allows safe commands" {
 	PERMISSION_MODE="deny"
-	# ask_permission checks mode before is_safe_command
 	run ask_permission "ls"
-	[ "$status" -ne 0 ]
+	[ "$status" -eq 0 ]
+}
+
+@test "ask_permission: deny mode allows safe git subcommands" {
+	PERMISSION_MODE="deny"
+	run ask_permission "git log --oneline"
+	[ "$status" -eq 0 ]
 }
 
 # ── tool_read ────────────────────────────────────────────────
@@ -309,10 +342,10 @@ teardown() {
 	[ "$status" -eq 0 ]
 }
 
-@test "ask_permission: deny mode rejects safe commands too" {
+@test "ask_permission: deny mode allows safe commands like echo" {
 	PERMISSION_MODE="deny"
 	run ask_permission "echo hello"
-	[ "$status" -ne 0 ]
+	[ "$status" -eq 0 ]
 }
 
 # ── is_safe_command: additional commands ────────────────────

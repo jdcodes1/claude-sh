@@ -190,13 +190,24 @@ is_safe_command() {
     local base_cmd
     base_cmd=$(echo "$cmd" | awk '{print $1}')
 
+    # Check single-word commands first
     case "$base_cmd" in
-        ls|cat|head|tail|wc|find|grep|rg|ag|git\ log|git\ status|git\ diff|\
-        git\ show|git\ branch|echo|printf|pwd|date|whoami|uname|env|which|\
+        ls|cat|head|tail|wc|find|grep|rg|ag|\
+        echo|printf|pwd|date|whoami|uname|env|which|\
         file|stat|du|df|tree|less|more|sort|uniq|diff|md5|shasum|type)
             return 0
             ;;
     esac
+
+    # Check two-word commands (e.g. git subcommands)
+    local two_words
+    two_words=$(echo "$cmd" | awk '{print $1, $2}')
+    case "$two_words" in
+        "git log"|"git status"|"git diff"|"git show"|"git branch")
+            return 0
+            ;;
+    esac
+
     return 1
 }
 
@@ -208,13 +219,13 @@ ask_permission() {
         return 0
     fi
 
-    if [[ "$PERMISSION_MODE" == "deny" ]]; then
-        return 1
-    fi
-
-    # Safe commands don't need permission
+    # Safe commands don't need permission in any mode
     if is_safe_command "$command"; then
         return 0
+    fi
+
+    if [[ "$PERMISSION_MODE" == "deny" ]]; then
+        return 1
     fi
 
     # Interactive permission prompt
