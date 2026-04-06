@@ -20,6 +20,32 @@ setup() {
 	[ -n "$CLAUDE" ]
 }
 
+# ── print_banner ─────────────────────────────────────────────
+
+@test "print_banner: box lines are equal display width" {
+	local output
+	output=$(print_banner)
+
+	# Strip ANSI escape sequences to get display characters
+	local strip_ansi
+	strip_ansi=$(printf '%s' "$output" | sed 's/\x1b\[[0-9;]*m//g')
+
+	# Extract the three box lines
+	local top mid bot
+	top=$(echo "$strip_ansi" | grep '╭.*╮')
+	mid=$(echo "$strip_ansi" | grep '│.*│')
+	bot=$(echo "$strip_ansi" | grep '╰.*╯')
+
+	# All three lines must have the same display width
+	local top_len mid_len bot_len
+	top_len=$(printf '%s' "$top" | wc -m)
+	mid_len=$(printf '%s' "$mid" | wc -m)
+	bot_len=$(printf '%s' "$bot" | wc -m)
+
+	[ "$top_len" -eq "$bot_len" ]
+	[ "$top_len" -eq "$mid_len" ]
+}
+
 # ── random_verb ──────────────────────────────────────────────
 
 @test "random_verb: returns a non-empty string" {

@@ -138,7 +138,7 @@ print_separator() {
 print_banner() {
     printf '\n'
     printf '%b╭─────────────────────────────╮%b\n' "$CLAUDE" "$RESET"
-    printf '%b│%b  claude.sh %b— bash edition  %b│%b\n' "$CLAUDE" "$BOLD$WHITE" "$DIM" "$CLAUDE" "$RESET"
+    printf '%b│%b  claude.sh %b— bash edition   %b│%b\n' "$CLAUDE" "$BOLD$WHITE" "$DIM" "$CLAUDE" "$RESET"
     printf '%b╰─────────────────────────────╯%b\n' "$CLAUDE" "$RESET"
     printf '%b  model: %s%b\n' "$DIM" "${CLAUDE_MODEL:-claude-sonnet-4-20250514}" "$RESET"
     printf '%b  type /help for commands, ctrl-c to cancel%b\n\n' "$DIM" "$RESET"
