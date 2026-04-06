@@ -209,7 +209,7 @@ save_session() {
 }
 
 list_sessions() {
-    if [[ ! -d "$SESSIONS_DIR" ]] || [[ -z "$(ls "$SESSIONS_DIR"/*.json 2>/dev/null)" ]]; then
+    if [[ ! -d "$SESSIONS_DIR" ]] || ! find "$SESSIONS_DIR" -maxdepth 1 -name '*.json' -print -quit 2>/dev/null | grep -q .; then
         print_dim "  No saved sessions"
         return
     fi
@@ -217,18 +217,17 @@ list_sessions() {
     printf '\n%bSaved sessions:%b\n\n' "$BOLD" "$RESET"
 
     local i=0
-    for f in $(ls -t "$SESSIONS_DIR"/*.json 2>/dev/null | head -n 10); do
-        local id cwd turns timestamp model
+    while IFS= read -r f; do
+        local id cwd turns model
         id=$(jq -r '.id' "$f")
         cwd=$(jq -r '.cwd' "$f")
         turns=$(jq -r '.turns' "$f")
-        timestamp=$(jq -r '.timestamp' "$f")
         model=$(jq -r '.model' "$f")
         i=$((i + 1))
         printf '  %b%d)%b %s %b(%s turns, %s)%b\n' \
             "$CYAN" "$i" "$RESET" "$id" "$DIM" "$turns" "$model" "$RESET"
         printf '     %b%s%b\n' "$DIM" "$cwd" "$RESET"
-    done
+    done < <(find "$SESSIONS_DIR" -maxdepth 1 -name '*.json' -print0 | xargs -0 ls -t 2>/dev/null | head -n 10)
     printf '\n%bUsage:%b /resume <number> or /resume <id>\n\n' "$DIM" "$RESET"
 }
 
@@ -238,10 +237,10 @@ resume_session() {
 
     # If it's a number, pick by index
     if [[ "$target" =~ ^[0-9]+$ ]]; then
-        session_file=$(ls -t "$SESSIONS_DIR"/*.json 2>/dev/null | sed -n "${target}p")
+        session_file=$(find "$SESSIONS_DIR" -maxdepth 1 -name '*.json' -print0 | xargs -0 ls -t 2>/dev/null | sed -n "${target}p")
     else
         # Match by ID prefix
-        session_file=$(ls "$SESSIONS_DIR"/${target}*.json 2>/dev/null | head -1)
+        session_file=$(find "$SESSIONS_DIR" -maxdepth 1 -name "${target}*.json" -print 2>/dev/null | head -1)
     fi
 
     if [[ -z "$session_file" ]] || [[ ! -f "$session_file" ]]; then

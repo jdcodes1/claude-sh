@@ -44,12 +44,10 @@ random_verb() {
 
 # Spinner management
 SPINNER_PID=""
-SPINNER_ACTIVE=false
 
 start_spinner() {
     local verb
     verb=$(random_verb)
-    SPINNER_ACTIVE=true
 
     (
         local frames=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
@@ -73,7 +71,6 @@ stop_spinner() {
         kill "$SPINNER_PID" 2>/dev/null
         wait "$SPINNER_PID" 2>/dev/null
         SPINNER_PID=""
-        SPINNER_ACTIVE=false
         printf '\r\033[K'
     fi
 }

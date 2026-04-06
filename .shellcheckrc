@@ -1,0 +1,4 @@
+# SC1091: Can't follow sourced files — libs are loaded via source at runtime
+disable=SC1091
+# SC2034: "Unused" variables — color/state vars in libs are used by callers
+disable=SC2034

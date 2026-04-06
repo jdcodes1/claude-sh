@@ -425,7 +425,7 @@ tool_glob() {
 
 tool_grep() {
     local input="$1"
-    local pattern search_path file_glob case_flag
+    local pattern search_path file_glob
     pattern=$(echo "$input" | jq -r '.pattern // empty')
     search_path=$(echo "$input" | jq -r '.path // empty')
     file_glob=$(echo "$input" | jq -r '.glob // empty')
