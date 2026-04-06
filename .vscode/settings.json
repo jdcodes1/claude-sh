@@ -1,0 +1,12 @@
+{
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    },
+    "files.trimTrailingWhitespace": false,
+    "editor.defaultFormatter": "vscode.markdown-language-features"
+  }
+}

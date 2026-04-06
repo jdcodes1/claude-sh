@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "codezombiech.gitignore",
+    "DavidAnson.vscode-markdownlint",
+    "EditorConfig.EditorConfig",
+    "edwinhuish.better-comments-next",
+    "foxundermoon.shell-format",
+    "mads-hartmann.bash-ide-vscode",
+    "ryu1kn.partial-diff",
+    "timonwong.shellcheck",
+    "yzhang.markdown-all-in-one",
+  ]
+}
