@@ -36,6 +36,12 @@ chmod +x claude.sh
 - Optional: `rg` (ripgrep) for better search
 - Optional: `python3` for the edit tool
 
+Runtime versions are pinned in `.tool-versions`. Install them with [mise](https://mise.jdx.dev/):
+
+```bash
+mise install
+```
+
 ## Usage
 
 ```bash
@@ -111,6 +117,14 @@ lib/
 | Binary size | 0 (script) | ~200MB node_modules |
 | Startup time | Instant | ~500ms |
 
+### Testing
+
+Tests use [bats](https://github.com/bats-core/bats-core) (Bash Automated Testing System):
+
+```bash
+bats test/
+```
+
 ## License
 
-MIT
+[MIT](LICENSE)
