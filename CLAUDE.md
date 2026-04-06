@@ -84,10 +84,13 @@ Three modes via `CLAUDE_SH_PERMISSIONS`: `ask` (default), `allow`, `deny`. Read-
 
 ## ShellCheck
 
-Two warnings are globally disabled in `.shellcheckrc`:
+Five warnings are globally disabled in `.shellcheckrc`:
 
 - SC1091: sourced files (libs loaded at runtime)
 - SC2034: unused variables (color/state vars used by callers)
+- SC2329: "function never invoked" (bats tests call functions indirectly)
+- SC2030: "modification is local to subshell" (expected in bats `@test` blocks)
+- SC2031: "variable was modified in subshell" (expected in bats `@test` blocks)
 
 ## Context7 libraries
 
