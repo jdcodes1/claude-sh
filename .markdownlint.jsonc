@@ -14,5 +14,7 @@
   // Fenced code blocks should be surrounded by blank lines
   "MD031": false,
   // Emphasis as heading (e.g., table of contents)
-  "MD036": false
+  "MD036": false,
+  // Table column style
+  "MD060": true
 }

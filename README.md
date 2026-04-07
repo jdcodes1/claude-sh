@@ -52,7 +52,7 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 ### Environment Variables
 
 | Variable | Default | Description |
-|---|---|---|
+| --- | --- | --- |
 | `ANTHROPIC_API_KEY` | (required) | Your Anthropic API key |
 | `CLAUDE_MODEL` | `claude-sonnet-4-20250514` | Model to use |
 | `CLAUDE_MAX_TOKENS` | `8192` | Max output tokens |
@@ -111,7 +111,7 @@ lib/
 ## Comparison
 
 | | claude.sh | Claude Code (TypeScript) |
-|---|---|---|
+| --- | --- | --- |
 | Lines of code | ~1,500 | ~380,000 |
 | Dependencies | curl, jq | 266 npm packages |
 | Binary size | 0 (script) | ~200MB node_modules |
