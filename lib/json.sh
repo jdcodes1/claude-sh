@@ -66,7 +66,7 @@ add_tool_results() {
 
 # Build the API request body
 build_request() {
-    local model="${CLAUDE_MODEL:-claude-sonnet-4-20250514}"
+    local model="${CLAUDE_MODEL:-claude-sonnet-4-6}"
     local max_tokens="${CLAUDE_MAX_TOKENS:-8192}"
     local messages tools system_prompt
 
@@ -192,7 +192,7 @@ save_session() {
     jq -n \
         --arg id "$SESSION_ID" \
         --arg cwd "$cwd" \
-        --arg model "${CLAUDE_MODEL:-claude-sonnet-4-20250514}" \
+        --arg model "${CLAUDE_MODEL:-claude-sonnet-4-6}" \
         --argjson messages "$(cat "$MESSAGES_FILE")" \
         --argjson input_tokens "$TOTAL_INPUT_TOKENS" \
         --argjson output_tokens "$TOTAL_OUTPUT_TOKENS" \

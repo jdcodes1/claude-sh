@@ -146,7 +146,7 @@ print_banner() {
     printf '%b╭%s╮%b\n' "$CLAUDE" "$border" "$RESET"
     printf '%b│%b  %s %b— %s   %b│%b\n' "$CLAUDE" "$BOLD$WHITE" "$title" "$DIM" "$subtitle" "$CLAUDE" "$RESET"
     printf '%b╰%s╯%b\n' "$CLAUDE" "$border" "$RESET"
-    printf '%b  model: %s%b\n' "$DIM" "${CLAUDE_MODEL:-claude-sonnet-4-20250514}" "$RESET"
+    printf '%b  model: %s%b\n' "$DIM" "${CLAUDE_MODEL:-claude-sonnet-4-6}" "$RESET"
     printf '%b  type /help for commands, ctrl-c to cancel%b\n\n' "$DIM" "$RESET"
 }
 

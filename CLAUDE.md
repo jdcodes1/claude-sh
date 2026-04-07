@@ -78,7 +78,7 @@ Three modes via `CLAUDE_SH_PERMISSIONS`: `ask` (default), `allow`, `deny`. Read-
 | Variable | Default | Purpose |
 |----------|---------|---------|
 | `ANTHROPIC_API_KEY` | (required) | API authentication |
-| `CLAUDE_MODEL` | `claude-sonnet-4-20250514` | Model selection |
+| `CLAUDE_MODEL` | `claude-sonnet-4-6` | Model selection |
 | `CLAUDE_MAX_TOKENS` | `8192` | Output token limit |
 | `CLAUDE_SH_PERMISSIONS` | `ask` | Permission mode |
 

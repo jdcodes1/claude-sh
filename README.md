@@ -54,7 +54,7 @@ export ANTHROPIC_API_KEY="sk-ant-..."
 | Variable | Default | Description |
 | --- | --- | --- |
 | `ANTHROPIC_API_KEY` | (required) | Your Anthropic API key |
-| `CLAUDE_MODEL` | `claude-sonnet-4-20250514` | Model to use |
+| `CLAUDE_MODEL` | `claude-sonnet-4-6` | Model to use |
 | `CLAUDE_MAX_TOKENS` | `8192` | Max output tokens |
 | `ANTHROPIC_API_URL` | `https://api.anthropic.com` | API base URL |
 | `CLAUDE_SH_PERMISSIONS` | `ask` | Permission mode: `ask`, `allow`, or `deny` |
