@@ -1,0 +1,10 @@
+# SC1091: Can't follow sourced files — libs are loaded via source at runtime
+disable=SC1091
+# SC2034: "Unused" variables — color/state vars in libs are used by callers
+disable=SC2034
+# SC2329: "Function never invoked" — bats tests call functions indirectly
+disable=SC2329
+# SC2030: "Modification is local to subshell" — expected in bats @test blocks
+disable=SC2030
+# SC2031: "Variable was modified in subshell" — expected in bats @test blocks
+disable=SC2031

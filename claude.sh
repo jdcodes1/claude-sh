@@ -1,22 +1,21 @@
 #!/usr/bin/env bash
-#
-# claude.sh — Claude Code, rewritten as a bash script
-#
-# Dependencies: curl, jq
-# Optional: rg (ripgrep) for better grep
-#
-# Usage:
-#   export ANTHROPIC_API_KEY="sk-ant-..."
-#   ./claude.sh
-#
-# Environment:
-#   ANTHROPIC_API_KEY   — Required. Your Anthropic API key.
-#   CLAUDE_MODEL        — Model to use (default: claude-sonnet-4-20250514)
-#   CLAUDE_MAX_TOKENS   — Max output tokens (default: 8192)
-#   ANTHROPIC_API_URL   — API base URL (default: https://api.anthropic.com)
-#
 
-set -euo pipefail
+: <<'HELP'
+claude.sh — Claude Code, rewritten as a bash script
+
+Dependencies: curl, jq
+Optional: rg (ripgrep) for better grep
+
+Usage:
+	export ANTHROPIC_API_KEY="sk-ant-..."
+	./claude.sh
+
+Environment:
+	ANTHROPIC_API_KEY   — Required. Your Anthropic API key.
+	CLAUDE_MODEL        — Model to use (default: claude-sonnet-4-6)
+	CLAUDE_MAX_TOKENS   — Max output tokens (default: 8192)
+	ANTHROPIC_API_URL   — API base URL (default: https://api.anthropic.com)
+HELP
 
 # ── Resolve script directory and source libs ──────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -76,7 +75,7 @@ handle_command() {
             return 0
             ;;
         /model)
-            printf '%bCurrent model:%b %s\n' "$DIM" "$RESET" "${CLAUDE_MODEL:-claude-sonnet-4-20250514}"
+            printf '%bCurrent model:%b %s\n' "$DIM" "$RESET" "${CLAUDE_MODEL:-claude-sonnet-4-6}"
             printf '%bChange with:%b export CLAUDE_MODEL=<model>\n' "$DIM" "$RESET"
             return 0
             ;;
@@ -305,11 +304,14 @@ show_exit_summary() {
         print_separator
         print_cost "$cost" "$TOTAL_INPUT_TOKENS" "$TOTAL_OUTPUT_TOKENS"
         printf '%b  %d turns | model: %s | session: %s%b\n' \
-            "$DIM" "$TURN_COUNT" "${CLAUDE_MODEL:-claude-sonnet-4-20250514}" "$SESSION_ID" "$RESET"
+            "$DIM" "$TURN_COUNT" "${CLAUDE_MODEL:-claude-sonnet-4-6}" "$SESSION_ID" "$RESET"
         printf '%b  resume with: ./claude.sh --resume %s%b\n' "$DIM" "$SESSION_ID" "$RESET"
     fi
     printf '\n%bbye!%b\n' "$DIM" "$RESET"
 }
 
 # ── Entry point ───────────────────────────────────────────────
-main "$@"
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    set -euo pipefail
+    main "$@"
+fi

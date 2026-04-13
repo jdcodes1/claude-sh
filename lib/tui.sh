@@ -44,12 +44,10 @@ random_verb() {
 
 # Spinner management
 SPINNER_PID=""
-SPINNER_ACTIVE=false
 
 start_spinner() {
     local verb
     verb=$(random_verb)
-    SPINNER_ACTIVE=true
 
     (
         local frames=('⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏')
@@ -73,7 +71,6 @@ stop_spinner() {
         kill "$SPINNER_PID" 2>/dev/null
         wait "$SPINNER_PID" 2>/dev/null
         SPINNER_PID=""
-        SPINNER_ACTIVE=false
         printf '\r\033[K'
     fi
 }
@@ -139,11 +136,17 @@ print_separator() {
 
 # Banner
 print_banner() {
+    local title="claude.sh"
+    local subtitle="bash edition"
+    local inner="  ${title} — ${subtitle}   "
+    local border
+    border=$(printf '%*s' "${#inner}" '' | tr ' ' '─')
+
     printf '\n'
-    printf '%b╭─────────────────────────────╮%b\n' "$CLAUDE" "$RESET"
-    printf '%b│%b  claude.sh %b— bash edition  %b│%b\n' "$CLAUDE" "$BOLD$WHITE" "$DIM" "$CLAUDE" "$RESET"
-    printf '%b╰─────────────────────────────╯%b\n' "$CLAUDE" "$RESET"
-    printf '%b  model: %s%b\n' "$DIM" "${CLAUDE_MODEL:-claude-sonnet-4-20250514}" "$RESET"
+    printf '%b╭%s╮%b\n' "$CLAUDE" "$border" "$RESET"
+    printf '%b│%b  %s %b— %s   %b│%b\n' "$CLAUDE" "$BOLD$WHITE" "$title" "$DIM" "$subtitle" "$CLAUDE" "$RESET"
+    printf '%b╰%s╯%b\n' "$CLAUDE" "$border" "$RESET"
+    printf '%b  model: %s%b\n' "$DIM" "${CLAUDE_MODEL:-claude-sonnet-4-6}" "$RESET"
     printf '%b  type /help for commands, ctrl-c to cancel%b\n\n' "$DIM" "$RESET"
 }
 
@@ -156,5 +159,5 @@ print_prompt() {
 cleanup_tui() {
     stop_spinner
     printf '%b' "$RESET"
-    tput cnorm 2>/dev/null  # Show cursor
+    tput cnorm 2>/dev/null || true  # Show cursor
 }
